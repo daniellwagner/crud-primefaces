@@ -1,9 +1,11 @@
 package crud.DAO;
 
-import crud.model.Livro;
 import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
+import crud.model.Livro;
 import crud.util.HibernateUtil;
  
 /**
@@ -24,11 +26,13 @@ public class LivroDAOImp implements LivroDAO {
 		return (Livro) session.load(Livro.class, id);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Livro> list() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();
-		List lista = session.createQuery("from Livro").list();
+		List<Livro> lista = session.createQuery("from Livro").list();
 		t.commit();
+		
 		return lista;
 	}
 	
@@ -38,6 +42,7 @@ public class LivroDAOImp implements LivroDAO {
 		session.delete(livro);
 		t.commit();
 	}
+	
 	public void update(Livro livro) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction t = session.beginTransaction();

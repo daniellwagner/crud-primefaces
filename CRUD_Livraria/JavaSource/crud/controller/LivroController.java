@@ -1,16 +1,18 @@
 package crud.controller;
 
-import crud.DAO.LivroDAO;
-import crud.DAO.LivroDAOImp;
-import crud.model.Livro;
 import java.util.List;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.ActionEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 
+import crud.DAO.LivroDAO;
+import crud.DAO.LivroDAOImp;
+import crud.model.Livro;
+
 /**
- * 
  * @author José Alexandre
  */
 @ManagedBean
@@ -18,11 +20,15 @@ import javax.faces.model.ListDataModel;
 public class LivroController {
 
 	private Livro livro;
+	
+	@SuppressWarnings("rawtypes")
 	private DataModel listaLivros;
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public DataModel getListarLivros() {
 		List<Livro> lista = new LivroDAOImp().list();
 		listaLivros = new ListDataModel(lista);
+		
 		return listaLivros;
 	}
 
@@ -34,32 +40,29 @@ public class LivroController {
 		this.livro = livro;
 	}
 
-	public String prepararAdicionarLivro() {
+	public void prepararAdicionarLivro(ActionEvent actionEvent) {
 		livro = new Livro();
-		return "gerenciarLivro";
 	}
 
-	public String prepararAlterarLivro() {
+	public void prepararAlterarLivro(ActionEvent actionEvent) {
 		livro = (Livro) (listaLivros.getRowData());
-		return "gerenciarLivro";
 	}
 
 	public String excluirLivro() {
 		Livro livroTemp = (Livro) (listaLivros.getRowData());
 		LivroDAO dao = new LivroDAOImp();
 		dao.remove(livroTemp);
+		
 		return "index";
 	}
 
-	public String adicionarLivro() {
+	public void adicionarLivro(ActionEvent actionEvent) {
 		LivroDAO dao = new LivroDAOImp();
 		dao.save(livro);
-		return "index";
 	}
 
-	public String alterarLivro() {
+	public void alterarLivro(ActionEvent actionEvent) {
 		LivroDAO dao = new LivroDAOImp();
 		dao.update(livro);
-		return "index";
 	}
 }
