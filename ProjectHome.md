@@ -1,0 +1,1 @@
+CRUD de uma livraria usando JSF, Hibernate e Primefaces. Hibernate para se comunicar com o banco de dados e Primefaces para fazer as paginas
